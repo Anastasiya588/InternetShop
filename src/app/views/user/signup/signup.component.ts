@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
     password: ['', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]],
     passwordRepeat: ['', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]],
     agree: [false, [Validators.requiredTrue]],
-  })
+  });
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
 
             if (error) {
               this._snackBar.open(error);
-              throw new Error(error)
+              throw new Error(error);
             }
 
             this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
               this._snackBar.open('Ошибка регистрации');
             }
           }
-    })
+    });
     }
   }
 }

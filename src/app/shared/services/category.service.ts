@@ -15,7 +15,7 @@ export class CategoryService {
   }
 
   getCategories(): Observable<CategoryType[]> {
-    return this.http.get<CategoryType[]>(environment.api + 'categories')
+    return this.http.get<CategoryType[]>(environment.api + 'categories');
   }
 
   getCategoriesWithTypes(): Observable<CategoryWithTypeType[]> {
@@ -30,7 +30,7 @@ export class CategoryService {
                 id: item.id,
                 name: item.name,
                 url: item.url,
-              })
+              });
             } else {
               array.push({
                 id: item.category.id,
@@ -43,11 +43,11 @@ export class CategoryService {
                     url: item.url,
                   }
                 ]
-              })
+              });
             }
 
 
-          })
+          });
           return array;
 
         })

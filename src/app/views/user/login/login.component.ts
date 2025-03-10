@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     email: ['', [Validators.email, Validators.required]],
     password: ['', [Validators.required]],
     rememberMe: [false],
-  })
+  });
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -45,13 +45,13 @@ export class LoginComponent implements OnInit {
 
             if (error) {
               this._snackBar.open(error);
-              throw new Error(error)
+              throw new Error(error);
             }
 
             this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
             this.authService.userId = loginResponse.userId;
             this._snackBar.open('Вы успешно авторизовались');
-            this.router.navigate(['/'])
+            this.router.navigate(['/']);
 
           },
           error: (errorResponse: HttpErrorResponse) => {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
               this._snackBar.open('Ошибка авторизации');
             }
           }
-        })
+        });
     }
 
   }

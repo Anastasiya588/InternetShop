@@ -20,11 +20,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class DetailComponent implements OnInit {
 
-  public count: number = 1;
+  public count = 1;
   public recommendedProducts: ProductType[] = [];
   public product!: ProductType;
   public serverStaticPath = environment.serverStaticPath;
-  public isLogged: boolean = false;
+  public isLogged = false;
 
 
   customOptions: OwlOptions = {
@@ -51,7 +51,7 @@ export class DetailComponent implements OnInit {
       }
     },
     nav: false
-  }
+  };
 
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute,
@@ -70,7 +70,7 @@ export class DetailComponent implements OnInit {
           this.cartService.getCart()
             .subscribe((cartData: CartType | DefaultResponseType) => {
               if ((cartData as DefaultResponseType).error !== undefined) {
-                throw new Error((cartData as DefaultResponseType).message)
+                throw new Error((cartData as DefaultResponseType).message);
               }
               const cartDataResponse = cartData as CartType;
 
@@ -88,23 +88,23 @@ export class DetailComponent implements OnInit {
               .subscribe((data: FavoriteType[] | DefaultResponseType) => {
                 if ((data as DefaultResponseType).error !== undefined) {
                   const error = (data as DefaultResponseType).message;
-                  throw new Error(error)
+                  throw new Error(error);
                 }
                 const products = data as FavoriteType[];
                 const currentProductExists = products.find(item => item.id = this.product.id);
                 if (currentProductExists) {
                   this.product.isInFavorite = true;
                 }
-              })
+              });
           }
 
-        })
+        });
     });
 
     this.productService.getBestProducts()
       .subscribe((data: ProductType[]) => {
         this.recommendedProducts = data;
-      })
+      });
   }
 
   updateCount(value: number) {
@@ -113,11 +113,11 @@ export class DetailComponent implements OnInit {
       this.cartService.updateCart(this.product.id, this.count)
         .subscribe((data: CartType|DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            throw new Error((data as DefaultResponseType).message)
+            throw new Error((data as DefaultResponseType).message);
           }
 
           this.product.countInCart = this.count;
-        })
+        });
     }
   }
 
@@ -125,21 +125,21 @@ export class DetailComponent implements OnInit {
     this.cartService.updateCart(this.product.id, this.count)
       .subscribe((data: CartType|DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
         this.product.countInCart = this.count;
-      })
+      });
   }
 
   removeFromCart() {
     this.cartService.updateCart(this.product.id, 0)
       .subscribe((data: CartType|DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
         this.product.countInCart = 0;
         this.count = 1;
-      })
+      });
   }
 
   updateFavorite() {
@@ -155,7 +155,7 @@ export class DetailComponent implements OnInit {
             throw new Error(data.message);
           }
           this.product.isInFavorite = false;
-        })
+        });
 
     } else {
       this.favoriteService.addFavorite(this.product.id)
@@ -165,7 +165,7 @@ export class DetailComponent implements OnInit {
           }
 
           this.product.isInFavorite = true;
-        })
+        });
     }
 
   }

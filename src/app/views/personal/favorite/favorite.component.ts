@@ -27,7 +27,7 @@ export class FavoriteComponent implements OnInit {
       .subscribe((data: FavoriteType[] | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
           const error = (data as DefaultResponseType).message;
-          throw new Error(error)
+          throw new Error(error);
         }
         this.products = data as FavoriteType[];
 
@@ -54,7 +54,7 @@ export class FavoriteComponent implements OnInit {
           throw new Error(data.message);
         }
         this.products = this.products.filter(item => item.id !== id);
-      })
+      });
   }
 
 
@@ -63,21 +63,21 @@ export class FavoriteComponent implements OnInit {
     this.cartService.updateCart(product.id, count)
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
 
         product.countInCart = count;
-      })
+      });
   }
 
   removeFromCart(product: FavoriteType) {
     this.cartService.updateCart(product.id, 0)
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
         product.countInCart = 0;
-      })
+      });
   }
 
   updateCount(value: number, product: FavoriteType): void {

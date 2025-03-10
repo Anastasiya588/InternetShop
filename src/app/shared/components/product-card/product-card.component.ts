@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProductService} from "../../services/product.service";
 import {ProductType} from "../../../../types/product.type";
 import {environment} from "../../../../environments/environment";
 import {CartService} from "../../services/cart.service";
@@ -18,12 +17,12 @@ import {Router} from "@angular/router";
 })
 export class ProductCardComponent implements OnInit {
   @Input() product!: ProductType;
-  @Input() isLight: boolean = false;
+  @Input() isLight = false;
   @Input() countInCart: number | undefined = 0;
 
   serverStaticPath = environment.serverStaticPath;
-  count: number = 1;
-  public isLogged: boolean = false;
+  count = 1;
+  public isLogged = false;
   constructor(private cartService: CartService,
               private authService: AuthService,
               private _snackBar: MatSnackBar,
@@ -42,11 +41,11 @@ export class ProductCardComponent implements OnInit {
     this.cartService.updateCart(this.product.id, this.count)
       .subscribe((data: CartType|DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
 
         this.countInCart = this.count;
-      })
+      });
   }
 
   updateCount(value: number) {
@@ -55,10 +54,10 @@ export class ProductCardComponent implements OnInit {
       this.cartService.updateCart(this.product.id, this.count)
         .subscribe((data: CartType|DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            throw new Error((data as DefaultResponseType).message)
+            throw new Error((data as DefaultResponseType).message);
           }
           this.countInCart = this.count;
-        })
+        });
     }
 
   }
@@ -67,11 +66,11 @@ export class ProductCardComponent implements OnInit {
     this.cartService.updateCart(this.product.id, 0)
       .subscribe((data: CartType|DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
         this.countInCart = 0;
         this.count = 1;
-      })
+      });
   }
 
   updateFavorite() {
@@ -87,7 +86,7 @@ export class ProductCardComponent implements OnInit {
             throw new Error(data.message);
           }
           this.product.isInFavorite = false;
-        })
+        });
 
     } else {
       this.favoriteService.addFavorite(this.product.id)
@@ -97,7 +96,7 @@ export class ProductCardComponent implements OnInit {
           }
 
           this.product.isInFavorite = true;
-        })
+        });
     }
 
   }

@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
         );
     }
     return next.handle(req)
-      .pipe(finalize(() => this.loaderService.hide()))
+      .pipe(finalize(() => this.loaderService.hide()));
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler) {
@@ -55,7 +55,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
 
           if (error) {
-            return throwError(() => new Error(error))
+            return throwError(() => new Error(error));
           }
 
           this.authService.setTokens(refreshResult.accessToken, refreshResult.refreshToken);
@@ -69,8 +69,8 @@ export class AuthInterceptor implements HttpInterceptor {
         catchError(error => {
           this.authService.removeTokens();
           this.router.navigate(['/']);
-          return throwError(() => error)
+          return throwError(() => error);
         })
-      )
+      );
   }
 }

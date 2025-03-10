@@ -1,4 +1,4 @@
-export type AppliedFilterType = {
+export interface AppliedFilterType {
   name: string,
   urlParam: string
 }

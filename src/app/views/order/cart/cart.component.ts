@@ -16,8 +16,8 @@ export class CartComponent implements OnInit {
   extraProducts: ProductType[] = [];
   cart: CartType | null = null;
   serverStaticPath = environment.serverStaticPath;
-  totalAmount: number = 0;
-  totalCount: number = 0;
+  totalAmount = 0;
+  totalCount = 0;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -43,7 +43,7 @@ export class CartComponent implements OnInit {
       }
     },
     nav: false
-  }
+  };
 
   constructor(private productService: ProductService,
               private cartService: CartService) {
@@ -53,17 +53,17 @@ export class CartComponent implements OnInit {
     this.productService.getBestProducts()
       .subscribe((data: ProductType[]) => {
         this.extraProducts = data;
-      })
+      });
 
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
 
         this.cart = data as CartType;
         this.calculateTotal();
-      })
+      });
   }
 
   calculateTotal() {
@@ -73,7 +73,7 @@ export class CartComponent implements OnInit {
       this.cart.items.forEach(item => {
         this.totalAmount += item.quantity * item.product.price;
         this.totalCount += item.quantity;
-      })
+      });
     }
   }
 
@@ -82,12 +82,12 @@ export class CartComponent implements OnInit {
       this.cartService.updateCart(id, count)
         .subscribe((data: CartType|DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            throw new Error((data as DefaultResponseType).message)
+            throw new Error((data as DefaultResponseType).message);
           }
 
           this.cart = data as CartType;
           this.calculateTotal();
-        })
+        });
     }
 
   }

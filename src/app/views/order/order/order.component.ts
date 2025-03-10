@@ -25,8 +25,8 @@ import {AuthService} from "../../../core/auth/auth.service";
 export class OrderComponent implements OnInit {
   cart: CartType | null = null;
   serverStaticPath = environment.serverStaticPath;
-  totalAmount: number = 0;
-  totalCount: number = 0;
+  totalAmount = 0;
+  totalCount = 0;
   deliveryType: DeliveryType = DeliveryType.delivery;
   deliveryTypes = DeliveryType;
   paymentTypes = PaymentType;
@@ -47,9 +47,9 @@ export class OrderComponent implements OnInit {
       apartment: [''],
       comment: ['']
     }
-  )
+  );
 
-  @ViewChild('popup') popup!: TemplateRef<ElementRef>
+  @ViewChild('popup') popup!: TemplateRef<ElementRef>;
 
   constructor(private cartService: CartService,
               private router: Router,
@@ -66,14 +66,14 @@ export class OrderComponent implements OnInit {
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
 
         this.cart = data as CartType;
         if (!this.cart || (this.cart && this.cart.items.length === 0)) {
           this._snackBar.open('Корзина пустая');
           this.router.navigate(['/']);
-          return
+          return;
         }
         this.calculateTotal();
       });
@@ -82,7 +82,7 @@ export class OrderComponent implements OnInit {
       this.userService.getUserInfo()
         .subscribe((data: UserInfoType | DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            throw new Error((data as DefaultResponseType).message)
+            throw new Error((data as DefaultResponseType).message);
           }
 
           const userInfo = data as UserInfoType;
@@ -99,14 +99,14 @@ export class OrderComponent implements OnInit {
             entrance: userInfo.entrance ? userInfo.entrance : '',
             apartment: userInfo.apartment ? userInfo.apartment : '',
             comment: ''
-          }
+          };
 
           this.orderForm.setValue(paramsToUpdate);
           if (userInfo.deliveryType) {
-            this.deliveryType = userInfo.deliveryType
+            this.deliveryType = userInfo.deliveryType;
           }
 
-        })
+        });
     }
 
   }
@@ -118,7 +118,7 @@ export class OrderComponent implements OnInit {
       this.cart.items.forEach(item => {
         this.totalAmount += item.quantity * item.product.price;
         this.totalCount += item.quantity;
-      })
+      });
     }
   }
 
@@ -158,7 +158,7 @@ export class OrderComponent implements OnInit {
         phone: this.orderForm.value.phone,
         paymentType: this.orderForm.value.paymentType,
         email: this.orderForm.value.email,
-      }
+      };
       if (this.deliveryType === DeliveryType.delivery) {
         if (this.orderForm.value.street) {
           paramsObject.street = this.orderForm.value.street;
@@ -182,7 +182,7 @@ export class OrderComponent implements OnInit {
         .subscribe({
           next: (data: OrderType | DefaultResponseType) => {
             if ((data as DefaultResponseType).error !== undefined) {
-              throw new Error((data as DefaultResponseType).message)
+              throw new Error((data as DefaultResponseType).message);
             }
             this.dialogRef = this.dialog.open(this.popup);
             this.dialogRef.backdropClick()
@@ -201,7 +201,7 @@ export class OrderComponent implements OnInit {
         });
     } else {
       this.orderForm.markAllAsTouched();
-      this._snackBar.open('Заполните необходимые поля')
+      this._snackBar.open('Заполните необходимые поля');
     }
   }
 

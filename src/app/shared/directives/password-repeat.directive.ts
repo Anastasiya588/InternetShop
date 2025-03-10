@@ -10,9 +10,9 @@ export class PasswordRepeatDirective implements Validator {
     const password = control.get('password');
     const passwordRepeat = control.get('passwordRepeat');
     if (password?.value !== passwordRepeat?.value) {
-      passwordRepeat?.setErrors({passwordRepeat: true})
-      return {passwordRepeat: true}
+      passwordRepeat?.setErrors({passwordRepeat: true});
+      return {passwordRepeat: true};
     }
-    return null
+    return null;
   }
 }

@@ -32,7 +32,7 @@ export class OrdersComponent implements OnInit {
           return item;
         });
 
-      })
+      });
   }
 
 }

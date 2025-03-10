@@ -9,27 +9,27 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class AuthService {
-  public accessTokenKey: string = 'accessToken';
-  public refreshTokenKey: string = 'refreshToken';
-  public userIdKey: string = 'userId';
+  public accessTokenKey = 'accessToken';
+  public refreshTokenKey = 'refreshToken';
+  public userIdKey = 'userId';
 
   public isLogged$: Subject<boolean> = new Subject<boolean>();
-  private isLogged: boolean = false;
+  private isLogged = false;
 
   constructor(private http: HttpClient) {
-    this.isLogged = !!localStorage.getItem(this.accessTokenKey)
+    this.isLogged = !!localStorage.getItem(this.accessTokenKey);
   }
 
   login(email: string, password: string, rememberMe: boolean): Observable<DefaultResponseType | LoginResponseType> {
     return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'login', {
       email, password, rememberMe
-    })
+    });
   }
 
   signup(email: string, password: string, passwordRepeat: string): Observable<DefaultResponseType | LoginResponseType> {
     return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'signup', {
       email, password, passwordRepeat
-    })
+    });
   }
 
   logout(): Observable<DefaultResponseType> {
@@ -37,7 +37,7 @@ export class AuthService {
     if (tokens && tokens.refreshToken) {
       return this.http.post<DefaultResponseType>(environment.api + 'logout', {
         refreshToken: tokens.refreshToken
-      })
+      });
     }
 
     throw throwError(() => 'Can not find token');
@@ -48,9 +48,9 @@ export class AuthService {
     if (tokens && tokens.refreshToken) {
       return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'refresh', {
         refreshToken: tokens.refreshToken
-      })
+      });
     }
-    throw throwError(() => 'Can not use token')
+    throw throwError(() => 'Can not use token');
   }
 
   public getIsLoggedIn(): boolean {
@@ -75,18 +75,18 @@ export class AuthService {
     return {
       accessToken: localStorage.getItem(this.accessTokenKey),
       refreshToken: localStorage.getItem(this.refreshTokenKey)
-    }
+    };
   }
 
   get userId(): null | string {
-    return localStorage.getItem(this.userIdKey)
+    return localStorage.getItem(this.userIdKey);
   }
 
   set userId(id: string | null) {
     if (id) {
-      localStorage.setItem(this.userIdKey, id)
+      localStorage.setItem(this.userIdKey, id);
     } else {
-      localStorage.removeItem(this.userIdKey)
+      localStorage.removeItem(this.userIdKey);
     }
   }
 }

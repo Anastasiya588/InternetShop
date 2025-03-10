@@ -14,17 +14,17 @@ export class CategoryFilterComponent implements OnInit {
   @Input() categoryWithTypes: CategoryWithTypeType | null = null;
   @Input() type: string | null = null;
   public open = false;
-  public activeParams: ActiveParamsType = {types: []}
+  public activeParams: ActiveParamsType = {types: []};
 
   from: number | null = null;
   to: number | null = null;
 
   get title(): string {
     if (this.categoryWithTypes) {
-      return this.categoryWithTypes.name
+      return this.categoryWithTypes.name;
     } else if (this.type) {
       if (this.type === 'height') {
-        return 'Высота'
+        return 'Высота';
       } else if (this.type === 'diameter') {
         return 'Диаметр';
       }
@@ -67,28 +67,28 @@ export class CategoryFilterComponent implements OnInit {
   }
 
   toggle() {
-    this.open = !this.open
+    this.open = !this.open;
   }
 
   updateFilterParam(url: string, checked: boolean) {
     if (this.activeParams.types && this.activeParams.types.length > 0) {
       const existingTypeInParams = this.activeParams.types.find(item => {
-        return item === url
+        return item === url;
       });
 
       if (existingTypeInParams && !checked) {
-        this.activeParams.types = this.activeParams.types.filter(item => item !== url)
+        this.activeParams.types = this.activeParams.types.filter(item => item !== url);
       } else if (!existingTypeInParams && checked) {
-        this.activeParams.types = [...this.activeParams.types, url]
+        this.activeParams.types = [...this.activeParams.types, url];
       }
     } else if (checked) {
-      this.activeParams.types = [url]
+      this.activeParams.types = [url];
     }
 
     this.activeParams.page = 1;
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams
-    })
+    });
   }
 
   updateFilterParamFromTo(param: string, value: string) {
@@ -102,7 +102,7 @@ export class CategoryFilterComponent implements OnInit {
       this.activeParams.page = 1;
       this.router.navigate(['/catalog'], {
         queryParams: this.activeParams
-      })
+      });
     }
   }
 }

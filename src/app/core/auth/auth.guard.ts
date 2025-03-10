@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
     const isLoggedIn = this.authService.getIsLoggedIn();
     if (!isLoggedIn) {
-      this._snackBar.open('Для доступа необходимо авторизоваться')
+      this._snackBar.open('Для доступа необходимо авторизоваться');
     }
     return isLoggedIn;
   }

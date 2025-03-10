@@ -17,11 +17,11 @@ import {debounceTime} from "rxjs";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public isLogged: boolean = false;
-  public count: number = 0;
+  public isLogged = false;
+  public count = 0;
   public products: ProductType[] = [];
   public serverStaticPath = environment.serverStaticPath;
-  public showedSearch: boolean = false;
+  public showedSearch = false;
   public searchField = new FormControl();
 
   @Input() categories: CategoryWithTypeType[] = [];
@@ -46,11 +46,11 @@ export class HeaderComponent implements OnInit {
             .subscribe((data: ProductType[]) => {
               this.products = data;
               this.showedSearch = true;
-            })
+            });
         } else {
           this.products = [];
         }
-      })
+      });
 
 
     //это в процессе обновления header получаем актуальное состояние авторизации пользователя
@@ -61,16 +61,16 @@ export class HeaderComponent implements OnInit {
     this.cartService.getCartCount()
       .subscribe((data: { count: number } | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message)
+          throw new Error((data as DefaultResponseType).message);
         }
 
         this.count = (data as { count: number }).count;
-      })
+      });
 
     this.cartService.count$
       .subscribe(count => {
         this.count = count;
-      })
+      });
   }
 
   logout(): void {
@@ -82,14 +82,14 @@ export class HeaderComponent implements OnInit {
         error: () => {
           this.doLogout();
         }
-      })
+      });
   }
 
   doLogout(): void {
     this.authService.removeTokens();
     this.authService.userId = null;
     this._snackBar.open('Вы вышли из системы');
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
   selectProduct(url: string) {
